@@ -8,7 +8,7 @@
 
     if (empty($user_name) || empty($email) || empty($password)){
         $_SESSION['message'] = '**Заполните все поля**';
-        header('Location: register.php');
+        header('Location: index.php?page=register');
     }
     else{
         if (!empty($db)){
@@ -17,11 +17,11 @@
 
             if (!move_uploaded_file($_FILES['avatar']['tmp_name'], $path)){
                 $_SESSION['message'] = 'Ошибка при загрузке аватара';
-                header('Location: register.php');
+                header('Location: index.php?page=register');
             }
 
             $user_query = $db->query("INSERT INTO cupc_schem.user (user_name, email, password, avatar) OVERRIDING USER VALUE VALUES ( '$user_name', '$email', '".md5($_POST['password'])."', '$path')");
             $_SESSION['message'] = 'Регистрация прошла успешно';
-            header('Location: login.php');
+            header('Location: index.php?page=login');
         }
     }
